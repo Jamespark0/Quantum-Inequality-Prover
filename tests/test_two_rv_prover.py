@@ -47,3 +47,48 @@ def test_arbitrary_positive_axis() -> None:
     prover = TwoRVInequalityProver()
 
     assert prover.is_shannon_type(inequality=inequality)
+    
+def test_add_single_constraint_to_empty_constraint() -> None:
+    new_constraint = [[1, 1, 0]]
+
+    prover = TwoRVInequalityProver()
+
+    prover.add_constraints(new_constraint)
+
+    assert np.all(prover.constraints == np.array(new_constraint))
+    
+
+def test_add_single_constraint_to_non_empty_constraint() -> None:
+    init_constraint = [[0, 1, 0]]
+
+    new_constraint: list = [[1, 0, 1]]
+
+    prover = TwoRVInequalityProver()
+
+    prover.add_constraints(init_constraint)
+    prover.add_constraints(new_constraint)
+
+    init_constraint.extend(new_constraint)
+
+    assert np.all(prover.constraints == np.array(init_constraint))
+    
+def test_add_multi_constraints_to_empty_constraint() -> None:
+    new_constraint = [[0, 1, 0], [1, 0, 1]]
+
+    prover = TwoRVInequalityProver()
+    prover.add_constraints(new_constraint)
+
+    assert np.all(prover.constraints == np.array(new_constraint))
+
+def test_add_multi_constraints_to_non_empty_constraint() -> None:
+    init_constraint = [[0, 0, 0]]
+
+    new_constraint = [[0, 1, 0], [1, 0, 1]]
+
+    prover = TwoRVInequalityProver()
+    prover.add_constraints(init_constraint)
+
+    prover.add_constraints(new_constraint)
+
+    init_constraint.extend(new_constraint)
+    assert np.all(prover.constraints == np.array(init_constraint))
