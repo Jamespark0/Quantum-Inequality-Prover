@@ -2,5 +2,15 @@
   "python.defaultInterpreterPath": "/Users/simonhuang/documents_local/programming-local/python-pdm/physics/.venv/bin/python",
   "python.testing.pytestArgs": ["."],
   "python.testing.unittestEnabled": false,
-  "python.testing.pytestEnabled": true
+  "python.testing.pytestEnabled": true,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": false,
+    "**/.hg": false,
+    "**/CVS": false,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/__pycache__": true,
+    "**/.pytest_cache": true
+  }
 }
