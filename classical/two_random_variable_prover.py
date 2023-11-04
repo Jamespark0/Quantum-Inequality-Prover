@@ -15,8 +15,9 @@ class TwoRVInequalityProver:
     
 
     def is_shannon_type(self, inequality: ArrayLike) -> bool:
-
         primal_lower_bound: NDArray = np.zeros(3) 
+        inequality = np.array(inequality)
+
         success: bool = linprog(-primal_lower_bound, A_ub=self.G.transpose(), b_ub=inequality).success
 
         return success

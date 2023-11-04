@@ -1,9 +1,7 @@
 import sys
 
-sys.path.insert(0, ".")
-
-from classical import check_import
+from classical.check_import import msg
 
 
 def test_msg():
-    assert check_import.msg == "Hello world!"
+    assert msg == "Hello world!"
