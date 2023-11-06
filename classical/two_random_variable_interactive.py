@@ -5,7 +5,6 @@ sys.path.insert(0, ".")
 
 from two_random_variable_prover import TwoRVInequalityProver
 
-# from src.two_random_variable_cli import TwoRandomVariableCLI
 from src import TwoRandomVariableCLI
 
 
