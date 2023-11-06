@@ -9,22 +9,22 @@ def test_value_is_int() -> None:
     value: str = '3'
 
     # assert is_float(value) is True
-    assert is_float(value)
+    assert is_float(value) == 3
 
 def test_value_is_float() -> None:
     value: str = "3.14"
 
-    assert is_float(value=value)
+    assert is_float(value=value) == 3.14
 
 def test_value_is_negative_int() -> None:
     value: str = "-5"
 
-    assert is_float(value=value)
+    assert is_float(value=value) == -5.0
 
 def test_value_is_negative_float() -> None:
     value: str = "-5.28"
 
-    assert is_float(value)
+    assert is_float(value) == -5.28
 
 
 def test_value_is_letters() -> None:
