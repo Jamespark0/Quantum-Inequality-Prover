@@ -1,7 +1,7 @@
 import os
 import sys
 
-sys.path.insert(0, ".")
+sys.path.insert(0, "..")
 
 from two_random_variable_prover import TwoRVInequalityProver
 
@@ -37,7 +37,7 @@ class InteractiveProver2RV:
     def play(self) -> None:
         while True:
             action = input(
-                f"Please enter '1' for calculating inequality or '2' for adding inequalities or 'q' for quiting the program \n > "
+                f"Please enter '1' for calculating inequality or '2' for adding constraints or 'q' for quiting the program \n > "
             )
             match action.isdecimal():
                 case True:
