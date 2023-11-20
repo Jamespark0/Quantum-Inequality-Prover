@@ -111,3 +111,9 @@ def test_get_all_elemental_inequalities_with_3_random_variables() -> None:
     ])
 
     assert (shannon.get_elemental_inequalities() == intended_g).all()
+
+def test_get_all_inequalities_with_6_random_variables() -> None:
+    # As it is hard to generate the intended g by hand, so I just check the shape
+    shannon = ShannonInequality(n=6)
+
+    assert shannon.get_elemental_inequalities().shape == (6 + 15 * (2**4), 2**6 - 1)
