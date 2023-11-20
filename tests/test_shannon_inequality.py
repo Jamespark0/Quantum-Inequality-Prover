@@ -1,3 +1,5 @@
+import numpy as np
+
 from classical import ShannonInequality
 
 
@@ -55,3 +57,57 @@ def test_type1_elemental_inequalities() -> None:
         assert shannon.index_to_pair[
             conditional_entropic_vector.index(-1)
         ] == shannon.all_pairs[-1] - {i}
+
+
+def test_all_type2_elemental_inequalities_with_2_random_variables() -> None:
+    shannon = ShannonInequality(n=2)
+
+    i, j = 1, 2
+
+    assert shannon._get_type2_elemental_entropic_vector(i, j) == [[1, 1, -1]]
+
+
+def test_all_types_elemental_inequalities_with_3_random_variables() -> None:
+    shannon = ShannonInequality(n=3)
+
+    i, j = 1, 2
+    assert shannon._get_type2_elemental_entropic_vector(i, j) == [
+        [1, 1, 0, -1, 0, 0, 0],
+        [0, 0, -1, 0, 1, 1, -1],
+    ]
+    
+    i, j = 1, 3
+    assert shannon._get_type2_elemental_entropic_vector(i,j) == [
+        [1, 0, 1, 0, -1, 0, 0],
+        [0, -1, 0, 1, 0, 1, -1],
+    ]
+    
+    i, j = 2, 3
+    assert shannon._get_type2_elemental_entropic_vector(i,j) == [
+        [0, 1, 1, 0, 0, -1, 0],
+        [-1, 0, 0, 1, 1, 0, -1],
+    ]
+
+def test_get_all_elemental_inequalities_with_2_random_variables() -> None:
+    shannon = ShannonInequality(n=2)
+
+    intended_g = np.array([[0, -1, 1], [-1, 0, 1], [1, 1, -1]])
+
+    assert (shannon.get_elemental_inequalities() == intended_g).all()
+
+def test_get_all_elemental_inequalities_with_3_random_variables() -> None:
+    shannon = ShannonInequality(n=3)
+
+    intended_g = np.array([
+        [0, 0, 0, 0, 0, -1, 1],
+        [0, 0, 0, 0, -1, 0, 1],
+        [0, 0, 0, -1, 0, 0, 1],
+        [1, 1, 0, -1, 0, 0, 0],
+        [0, 0, -1, 0, 1, 1, -1],
+        [1, 0, 1, 0, -1, 0, 0],
+        [0, -1, 0, 1, 0, 1, -1],
+        [0, 1, 1, 0, 0, -1, 0],
+        [-1, 0, 0, 1, 1, 0, -1],
+    ])
+
+    assert (shannon.get_elemental_inequalities() == intended_g).all()
