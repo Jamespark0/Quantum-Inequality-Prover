@@ -87,8 +87,8 @@ class ShannonInequality:
         for pair in self.entropic_space.all_pairs:
             if len(pair) == 2:
                 g.extend(self._get_type2_elemental_entropic_vector(*pair))
-            
-            # The following line is used for speed boost as I assume the order of the corresponding 
+
+            # The following line is used for speed boost as I assume the order of the corresponding
             # joint entropy is ascending
             elif len(pair) > 2:
                 break

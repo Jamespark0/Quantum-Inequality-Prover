@@ -7,13 +7,14 @@ class EntropicSpace:
     """
     Generate all possible pairs from n random variables.
 
-    The class includes information of 
+    The class includes information of
 
     1. All the pairs
 
     2. The index in an entropic vector that corresponds to the given pairing
-    
+
     """
+
     n: int
 
     def __post_init__(self):
@@ -33,17 +34,15 @@ class EntropicSpace:
             ]
         )
 
-
     # Properties
     @property
     def all_pairs(self):
         return self._all_pairs
-    
+
     @property
     def to_index(self):
         return self._to_index
-    
+
     @property
     def universal(self):
         return self._universal
-    

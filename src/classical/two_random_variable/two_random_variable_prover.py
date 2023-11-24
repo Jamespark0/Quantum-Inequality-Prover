@@ -41,11 +41,10 @@ class TwoRVInequalityProver:
 
     def _clear_constraints(self):
         self.constraints = np.empty((0, 3))
-    
+
     def show_constraints(self) -> None:
         for i, constraint in enumerate(self.constraints):
-            print(f"Constraint #{i}", end='\t')
+            print(f"Constraint #{i}", end="\t")
             for value in constraint:
                 print(value, end=" ")
             print("\n")
-

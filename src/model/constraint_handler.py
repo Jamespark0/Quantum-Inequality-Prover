@@ -23,6 +23,5 @@ class ConstraintHandler:
         new_constraints = np.array(new_constraints)
         self._constraints = np.vstack((self._constraints, new_constraints))
 
-
     def clear_constraint(self):
         self._constraints = np.empty((0, self._constraints.shape[1]))

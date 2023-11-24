@@ -28,51 +28,54 @@ def test_all_types_elemental_inequalities_with_3_random_variables() -> None:
     entropic_space = EntropicSpace(n=3)
     shannon = ShannonInequality(entropic_space)
 
-
     i, j = 1, 2
     assert shannon._get_type2_elemental_entropic_vector(i, j) == [
         [1, 1, 0, -1, 0, 0, 0],
         [0, 0, -1, 0, 1, 1, -1],
     ]
-    
+
     i, j = 1, 3
-    assert shannon._get_type2_elemental_entropic_vector(i,j) == [
+    assert shannon._get_type2_elemental_entropic_vector(i, j) == [
         [1, 0, 1, 0, -1, 0, 0],
         [0, -1, 0, 1, 0, 1, -1],
     ]
-    
+
     i, j = 2, 3
-    assert shannon._get_type2_elemental_entropic_vector(i,j) == [
+    assert shannon._get_type2_elemental_entropic_vector(i, j) == [
         [0, 1, 1, 0, 0, -1, 0],
         [-1, 0, 0, 1, 1, 0, -1],
     ]
+
 
 def test_get_all_elemental_inequalities_with_2_random_variables() -> None:
     entropic_space = EntropicSpace(n=2)
     shannon = ShannonInequality(entropic_space)
 
-
     intended_g = np.array([[0, -1, 1], [-1, 0, 1], [1, 1, -1]])
 
     assert (shannon.get_elemental_inequalities() == intended_g).all()
+
 
 def test_get_all_elemental_inequalities_with_3_random_variables() -> None:
     entropic_space = EntropicSpace(n=3)
     shannon = ShannonInequality(entropic_space)
 
-    intended_g = np.array([
-        [0, 0, 0, 0, 0, -1, 1],
-        [0, 0, 0, 0, -1, 0, 1],
-        [0, 0, 0, -1, 0, 0, 1],
-        [1, 1, 0, -1, 0, 0, 0],
-        [0, 0, -1, 0, 1, 1, -1],
-        [1, 0, 1, 0, -1, 0, 0],
-        [0, -1, 0, 1, 0, 1, -1],
-        [0, 1, 1, 0, 0, -1, 0],
-        [-1, 0, 0, 1, 1, 0, -1],
-    ])
+    intended_g = np.array(
+        [
+            [0, 0, 0, 0, 0, -1, 1],
+            [0, 0, 0, 0, -1, 0, 1],
+            [0, 0, 0, -1, 0, 0, 1],
+            [1, 1, 0, -1, 0, 0, 0],
+            [0, 0, -1, 0, 1, 1, -1],
+            [1, 0, 1, 0, -1, 0, 0],
+            [0, -1, 0, 1, 0, 1, -1],
+            [0, 1, 1, 0, 0, -1, 0],
+            [-1, 0, 0, 1, 1, 0, -1],
+        ]
+    )
 
     assert (shannon.get_elemental_inequalities() == intended_g).all()
+
 
 def test_get_all_inequalities_with_6_random_variables() -> None:
     entropic_space = EntropicSpace(n=6)

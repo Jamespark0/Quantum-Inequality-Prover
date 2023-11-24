@@ -9,12 +9,9 @@ G: NDArray = np.array([[0, -1, 1], [1, 1, -1], [-1, 0, 1]])
 
 
 # Apply duality to check if the "unconstrained" inequality is Shannon-type
-# Inequality whose mathematical form is a * H(1) + b * H(2) + c * H(1, 2) >= 0 
+# Inequality whose mathematical form is a * H(1) + b * H(2) + c * H(1, 2) >= 0
 # is expressed as [a,b,c]
 def prover_without_constraint(inequality: NDArray):
     primal_lower_bound: NDArray = np.zeros(3)
     result = linprog(-primal_lower_bound, A_ub=G.transpose(), b_ub=inequality)
     return result
-
-
-

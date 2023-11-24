@@ -1,7 +1,8 @@
 import os
 
-from src.classical.two_random_variable.two_random_variable_prover import \
-    TwoRVInequalityProver
+from src.classical.two_random_variable.two_random_variable_prover import (
+    TwoRVInequalityProver,
+)
 from src.view import TwoRandomVariableCLI
 
 
@@ -21,7 +22,7 @@ class InteractiveProver2RV:
             self.cli.show_shannon_type()
         else:
             self.cli.show_non_shannon_type()
-    
+
     def _get_constraints(self) -> None:
         os.system("clear")
 
@@ -40,7 +41,7 @@ class InteractiveProver2RV:
                 case True:
                     if int(action) == 1:
                         self._calculate_inequality()
-                    
+
                     if int(action) == 2:
                         self._get_constraints()
 
