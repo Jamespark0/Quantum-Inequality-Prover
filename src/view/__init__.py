@@ -1,1 +1,2 @@
 from src.view.two_random_variable_cli import TwoRandomVariableCLI
+from src.view.view_entropic_space import ViewEntropicSpace

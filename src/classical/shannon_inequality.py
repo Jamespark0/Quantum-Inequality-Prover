@@ -11,6 +11,8 @@ class ShannonInequality:
     entropic_space: EntropicSpace
 
     def __post_init__(self):
+        self.G = self._get_elemental_inequalities()
+
         self.index_to_pair = dict(
             zip(
                 [x for x in range(2 ** (self.entropic_space.n) - 1)],
@@ -77,7 +79,7 @@ class ShannonInequality:
 
         return all_type2_entropic_vecotrs_ij
 
-    def get_elemental_inequalities(self) -> NDArray:
+    def _get_elemental_inequalities(self) -> NDArray:
         g: list[list[int]] = []
         # Get type 1 elemental inequalities
         for i in range(1, self.entropic_space.n + 1):

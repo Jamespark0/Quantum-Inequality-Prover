@@ -53,7 +53,7 @@ def test_get_all_elemental_inequalities_with_2_random_variables() -> None:
 
     intended_g = np.array([[0, -1, 1], [-1, 0, 1], [1, 1, -1]])
 
-    assert (shannon.get_elemental_inequalities() == intended_g).all()
+    assert (shannon._get_elemental_inequalities() == intended_g).all()
 
 
 def test_get_all_elemental_inequalities_with_3_random_variables() -> None:
@@ -74,7 +74,7 @@ def test_get_all_elemental_inequalities_with_3_random_variables() -> None:
         ]
     )
 
-    assert (shannon.get_elemental_inequalities() == intended_g).all()
+    assert (shannon._get_elemental_inequalities() == intended_g).all()
 
 
 def test_get_all_inequalities_with_6_random_variables() -> None:
@@ -82,4 +82,7 @@ def test_get_all_inequalities_with_6_random_variables() -> None:
     shannon = ShannonInequality(entropic_space)
 
     # As it is hard to generate the intended g by hand, so I just check the shape
-    assert shannon.get_elemental_inequalities().shape == (6 + 15 * (2**4), 2**6 - 1)
+    assert shannon._get_elemental_inequalities().shape == (
+        6 + 15 * (2**4),
+        2**6 - 1,
+    )
