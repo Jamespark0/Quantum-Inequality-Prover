@@ -1,3 +1,0 @@
-from classical.generator import ShannonInequality
-from classical.two_random_variable import prover_without_constraint
-from classical.two_random_variable_prover import TwoRVInequalityProver

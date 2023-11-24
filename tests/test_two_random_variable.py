@@ -1,7 +1,7 @@
 import numpy as np
 from numpy.typing import NDArray
 
-from classical import prover_without_constraint
+from src.classical.two_random_variable import prover_without_constraint
 
 
 def test_shannon_entropy() -> None:

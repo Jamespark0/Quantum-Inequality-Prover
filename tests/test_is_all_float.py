@@ -1,4 +1,4 @@
-from src.two_random_variable_cli import is_all_float
+from src.view.two_random_variable_cli import is_all_float
 
 
 def test_empty_list() -> None:

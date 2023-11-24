@@ -1,6 +1,6 @@
 from pytest import MonkeyPatch
 
-from src import TwoRandomVariableCLI
+from src.view import TwoRandomVariableCLI
 
 
 def test_valid_input(monkeypatch: MonkeyPatch) -> None:

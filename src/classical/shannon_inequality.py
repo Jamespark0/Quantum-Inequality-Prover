@@ -3,7 +3,7 @@ from dataclasses import dataclass
 import numpy as np
 from numpy.typing import NDArray
 
-from src.entropic_space import EntropicSpace
+from src.shared.entropic_space import EntropicSpace
 
 
 @dataclass
@@ -87,5 +87,10 @@ class ShannonInequality:
         for pair in self.entropic_space.all_pairs:
             if len(pair) == 2:
                 g.extend(self._get_type2_elemental_entropic_vector(*pair))
+            
+            # The following line is used for speed boost as I assume the order of the corresponding 
+            # joint entropy is ascending
+            elif len(pair) > 2:
+                break
 
         return np.array(g)

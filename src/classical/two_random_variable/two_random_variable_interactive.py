@@ -1,11 +1,8 @@
 import os
-import sys
 
-sys.path.insert(0, "..")
-
-from two_random_variable_prover import TwoRVInequalityProver
-
-from src import TwoRandomVariableCLI
+from src.classical.two_random_variable.two_random_variable_prover import \
+    TwoRVInequalityProver
+from src.view import TwoRandomVariableCLI
 
 
 class InteractiveProver2RV:

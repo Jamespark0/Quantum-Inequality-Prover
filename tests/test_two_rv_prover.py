@@ -1,7 +1,7 @@
 import numpy as np
 from numpy.typing import NDArray
 
-from classical import TwoRVInequalityProver
+from src.classical.two_random_variable import TwoRVInequalityProver
 
 
 def test_h1() -> None:

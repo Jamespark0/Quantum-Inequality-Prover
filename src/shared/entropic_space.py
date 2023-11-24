@@ -17,9 +17,9 @@ class EntropicSpace:
     n: int
 
     def __post_init__(self):
-        self.all_pairs: tuple[frozenset[int], ...] = self._get_all_pairs(self.n)
-        self.to_index = dict(zip(self.all_pairs, [x for x in range(2**self.n - 1)]))
-        self.universal: frozenset = frozenset({x for x in range(1, self.n + 1)})
+        self._all_pairs: tuple[frozenset[int], ...] = self._get_all_pairs(self.n)
+        self._to_index = dict(zip(self._all_pairs, [x for x in range(2**self.n - 1)]))
+        self._universal: frozenset = frozenset({x for x in range(1, self.n + 1)})
 
     # Just to help generate pairs
     def _get_all_pairs(self, n: int) -> tuple[frozenset[int], ...]:
@@ -32,3 +32,18 @@ class EntropicSpace:
                 for x in combinations(random_variable_labeling, r=_)
             ]
         )
+
+
+    # Properties
+    @property
+    def all_pairs(self):
+        return self._all_pairs
+    
+    @property
+    def to_index(self):
+        return self._to_index
+    
+    @property
+    def universal(self):
+        return self._universal
+    

@@ -1,6 +1,6 @@
 from pytest import MonkeyPatch
 
-from src import TwoRandomVariableCLI as cli
+from src.view import TwoRandomVariableCLI as cli
 
 
 def test_empty_input(monkeypatch: MonkeyPatch) -> None:

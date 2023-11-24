@@ -1,5 +1,5 @@
-from classical import ShannonInequality
-from src.entropic_space import EntropicSpace
+from src.classical import ShannonInequality
+from src.shared import EntropicSpace
 
 
 def test_from_no_random_variable() -> None:
