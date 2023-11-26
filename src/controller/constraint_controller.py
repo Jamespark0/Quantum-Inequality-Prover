@@ -18,14 +18,31 @@ class ConstraintController:
 
             try:
                 # Remove empty string from new_constraints
-                new_constraints = list(filter(None, new_constraints))
-                new_constraints = list(map(self._constraint_formatter, new_constraints))
-                self.model.add_constraints(new_constraints)
+                self.model.add_constraints(
+                    self._validate_and_format_constraints(new_constraints)
+                )
                 break
             except ValueError as e:
                 print(str(e).split("\n")[-1], end="\n" * 2)
 
-    def _constraint_formatter(self, constraint: str):
+    def _validate_and_format_constraints(
+        self, new_constraints: list[str]
+    ) -> list[list[float]]:
+        """
+        Validate and format a list of constraints.
+
+        Args:
+            new_constraints (list[str]): List of constraints, and each constraint is a string.
+
+        Returns:
+            list[list[float]]: Formatted constraints. Each constraint is described by the list of coefficients.
+        """
+        # Remove empty string from new_constraints
+        new_constraints = list(filter(None, new_constraints))
+
+        return list(map(self._format_single_constraint, new_constraints))
+
+    def _format_single_constraint(self, constraint: str):
         """
         Format a single constraint which string into a list of numbers.
 
