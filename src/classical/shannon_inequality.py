@@ -11,7 +11,7 @@ class ShannonInequality:
     entropic_space: EntropicSpace
 
     def __post_init__(self):
-        self.G = self._get_elemental_inequalities()
+        self._ELEMENTAL = self._get_elemental_inequalities()
 
         self.index_to_pair = dict(
             zip(
@@ -96,3 +96,7 @@ class ShannonInequality:
                 break
 
         return np.array(g)
+
+    @property
+    def ELEMENTAL(self):
+        return self._ELEMENTAL

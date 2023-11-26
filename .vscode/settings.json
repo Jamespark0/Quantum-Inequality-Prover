@@ -16,4 +16,5 @@
     "**/.pytest_cache": true
   },
   "editor.formatOnSave": true,
+  "python.analysis.autoImportCompletions": true,
 }

@@ -1,9 +1,9 @@
 from src.shared import EntropicSpace
-from src.view import ViewEntropicSpace
+from src.view import EntropicSpaceView
 
 
 def main(space: EntropicSpace):
-    view = ViewEntropicSpace(space=space)
+    view = EntropicSpaceView(space=space)
     view.display_inequality_rules()
 
 

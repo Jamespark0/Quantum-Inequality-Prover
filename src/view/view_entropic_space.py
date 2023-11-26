@@ -1,7 +1,8 @@
 from src.shared import EntropicSpace
+from src.util import to_joint_entropy
 
 
-class ViewEntropicSpace:
+class EntropicSpaceView:
     def __init__(self, space: EntropicSpace):
         self.space: EntropicSpace = space
 
@@ -11,16 +12,13 @@ class ViewEntropicSpace:
             end="\n\n",
         )
         print(
-            f'{" + ".join(f"{self._map_set_to_joint_entropy(pair=x[0], index=x[1])}" for x in sorted(self.space.to_index.items(), key=lambda x: x[1]))}',
+            f'{" + ".join(f"a({x[1] + 1}) * {to_joint_entropy(pair=x[0])}" for x in sorted(self.space.to_index.items(), key=lambda x: x[1]))}',
             end="\n\n",
         )
-        print(
-            f"The input should contain {len(self.space.all_pairs)} numbers, and in the order of: ",
-            end="",
-        )
-        print(
-            f'{", ".join(f"a({i})" for i in range(1, len(self.space.all_pairs) + 1))}'
-        )
 
-    def _map_set_to_joint_entropy(self, pair: set | frozenset, index: int):
-        return f'a({index + 1}) * H({",".join(str(x) for x in tuple(pair))})'
+    def get_inequality_input_msg(self):
+        return (
+            f"The input should contain {len(self.space.all_pairs)} numbers, and in the order of: "
+            + f'{", ".join(f"a({i})" for i in range(1, len(self.space.all_pairs) + 1))}'
+            + "\n# "
+        )
