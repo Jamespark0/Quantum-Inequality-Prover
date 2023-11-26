@@ -25,8 +25,22 @@ class ConstraintController:
             except ValueError as e:
                 print(str(e).split("\n")[-1], end="\n" * 2)
 
-    def _constraint_formatter(self, inequality: str):
-        coefficients = inequality.split()
+    def _constraint_formatter(self, constraint: str):
+        """
+        Format a single constraint which string into a list of numbers.
+
+        Also check if the constraint has the correct length.
+
+        Args:
+            inequality (str): A single constraint. The coefficients in the canonical form is separated by space.
+
+        Raises:
+            ValueError: If the coefficients does not match the number of joint entropies.
+
+        Returns:
+            list[float]: A list of float which represents the coefficient of the given constraint in canonical form.
+        """
+        coefficients = constraint.split()
         if len(coefficients) != self.model.constraints.shape[1]:
             raise ValueError(
                 f"The inequality should contains '{self.model.constraints.shape[1]}' coefficients."
@@ -41,7 +55,7 @@ class ConstraintController:
 
 
 if __name__ == "__main__":
-    from src.shared import EntropicSpace
+    from src.model import EntropicSpace
 
     n = 2
     controller = ConstraintController(

@@ -3,7 +3,7 @@ from dataclasses import dataclass
 import numpy as np
 from numpy.typing import NDArray
 
-from src.shared.entropic_space import EntropicSpace
+from src.model import EntropicSpace
 
 
 @dataclass

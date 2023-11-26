@@ -1,6 +1,6 @@
 from numpy.typing import NDArray
 
-from src.shared import EntropicSpace
+from src.model import EntropicSpace
 from src.util import to_joint_entropy
 
 

@@ -1,7 +1,7 @@
 import numpy as np
 
 from src.classical import ShannonInequality
-from src.shared.entropic_space import EntropicSpace
+from src.model import EntropicSpace
 
 
 def test_type1_elemental_inequalities() -> None:
