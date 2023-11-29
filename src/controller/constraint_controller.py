@@ -17,12 +17,15 @@ class ConstraintController:
         """
         self.view.display_constraint_rules()
         while True:
-            new_constraints = input(self.view.get_constraint_input_message()).split(",")
+            new_constraints = input(self.view.get_constraint_input_message())
+
+            if new_constraints.split() == []:
+                return
 
             try:
                 # Remove empty string from new_constraints
                 self.model.add_constraints(
-                    self._validate_and_format_constraints(new_constraints)
+                    self._validate_and_format_constraints(new_constraints.split(","))
                 )
                 break
             except ValueError as e:
