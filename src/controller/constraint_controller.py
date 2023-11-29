@@ -7,7 +7,10 @@ class ConstraintController:
         self.model: CustomizeConstraint = model
         self.view: ConstraintView = view
 
-    def get_constraints(self):
+    def get_current_constraints(self):
+        return self.model.constraints
+
+    def add_constraints(self):
         """
         Get inequality from user, and add the constraints to model.constraints
 
@@ -24,6 +27,10 @@ class ConstraintController:
                 break
             except ValueError as e:
                 print(str(e).split("\n")[-1], end="\n" * 2)
+            except Exception as e:
+                # Handle errors that are not value errors
+                # which I do not expect
+                print(f"Unexpected Error: {e}")
 
     def _validate_and_format_constraints(
         self, new_constraints: list[str]
@@ -82,10 +89,10 @@ if __name__ == "__main__":
 
     print("Initialize:")
     controller.show_constraints()
-    controller.get_constraints()
+    controller.add_constraints()
     print("Add 1st:")
     controller.show_constraints()
-    controller.get_constraints()
+    controller.add_constraints()
     print("Add 2nd:")
     controller.show_constraints()
     controller.clear_constraints()
