@@ -7,7 +7,7 @@ from src.model.model import BaseModel
 
 
 @dataclass
-class Inequality(BaseModel):
+class Constraints(BaseModel):
     n: InitVar[int]
     _expressions: NDArray = field(init=False)
 
@@ -19,5 +19,5 @@ class Inequality(BaseModel):
         return self._expressions
 
     @expressions.setter
-    def expressions(self, new_inequality: NDArray):
-        self._expressions = new_inequality
+    def expressions(self, new_expressions: NDArray):
+        self._expressions = new_expressions

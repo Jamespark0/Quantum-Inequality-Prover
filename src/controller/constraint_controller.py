@@ -1,42 +1,51 @@
-from src.model import CustomizeConstraint
+import numpy as np
+
+from src.controller.controller import Controller
+from src.model import Constraints
 from src.view import ConstraintView
 
 
-class ConstraintController:
-    def __init__(self, model: CustomizeConstraint, view: ConstraintView):
-        self.model: CustomizeConstraint = model
+class ConstraintController(Controller):
+    def __init__(self, model: Constraints, view: ConstraintView):
+        self.model: Constraints = model
         self.view: ConstraintView = view
 
-    def get_current_constraints(self):
-        return self.model.constraints
+    def get_expressions(self):
+        return self.model.expressions
 
-    def add_constraints(self):
+    def add_expressions(self):
         """
         Get inequality from user, and add the constraints to model.constraints
 
         """
-        self.view.display_constraint_rules()
+        self.view.show_rules()
+        print(self.view.get_input_message())
         while True:
-            new_constraints = input(self.view.get_constraint_input_message())
+            new_constraints = self.view.get_user_input()
 
+            # If the user input nothing, then nothing should be added
             if new_constraints.split() == []:
                 return
 
             try:
                 # Remove empty string from new_constraints
-                self.model.add_constraints(
-                    self._validate_and_format_constraints(new_constraints.split(","))
+                self.model.expressions = np.vstack(
+                    (
+                        self.model.expressions,
+                        self._validate_and_format_user_input(new_constraints),
+                    )
                 )
                 break
             except ValueError as e:
                 print(str(e).split("\n")[-1], end="\n" * 2)
+                print("Please enter new constraints!")
             except Exception as e:
                 # Handle errors that are not value errors
                 # which I do not expect
                 print(f"Unexpected Error: {e}")
 
-    def _validate_and_format_constraints(
-        self, new_constraints: list[str]
+    def _validate_and_format_user_input(
+        self, new_constraints: str
     ) -> list[list[float]]:
         """
         Validate and format a list of constraints.
@@ -48,9 +57,12 @@ class ConstraintController:
             list[list[float]]: Formatted constraints. Each constraint is described by the list of coefficients.
         """
         # Remove empty string from new_constraints
-        new_constraints = list(filter(None, new_constraints))
-
-        return list(map(self._format_single_constraint, new_constraints))
+        return list(
+            map(
+                self._format_single_constraint,
+                list(filter(None, new_constraints.split(","))),
+            )
+        )
 
     def _format_single_constraint(self, constraint: str):
         """
@@ -68,17 +80,17 @@ class ConstraintController:
             list[float]: A list of float which represents the coefficient of the given constraint in canonical form.
         """
         coefficients = constraint.split()
-        if len(coefficients) != self.model.constraints.shape[1]:
+        if len(coefficients) != self.model.expressions.shape[1]:
             raise ValueError(
-                f"The inequality should contains '{self.model.constraints.shape[1]}' coefficients."
+                f"The inequality should contains '{self.model.expressions.shape[1]}' coefficients."
             )
         return list(map(float, coefficients))
 
     def clear_constraints(self):
-        self.model.clear_constraint()
+        self.model.expressions = np.empty((0, self.model.expressions.shape[1]))
 
-    def show_constraints(self):
-        self.view.show_current_constraint(self.model.constraints)
+    def show_expressions(self):
+        self.view.show_expressions(self.model.expressions)
 
 
 if __name__ == "__main__":
@@ -86,18 +98,17 @@ if __name__ == "__main__":
 
     n = 2
     controller = ConstraintController(
-        model=CustomizeConstraint(random_variables=n),
-        view=ConstraintView(EntropicSpace(n)),
+        model=Constraints(n=n), view=ConstraintView(EntropicSpace(n).all_pairs)
     )
 
     print("Initialize:")
-    controller.show_constraints()
-    controller.add_constraints()
+    controller.show_expressions()
+    controller.add_expressions()
     print("Add 1st:")
-    controller.show_constraints()
-    controller.add_constraints()
+    controller.show_expressions()
+    controller.add_expressions()
     print("Add 2nd:")
-    controller.show_constraints()
+    controller.show_expressions()
     controller.clear_constraints()
     print("After clearing")
-    controller.show_constraints()
+    controller.show_expressions()

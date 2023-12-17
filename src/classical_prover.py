@@ -1,4 +1,4 @@
-from typing import Sequence
+from typing import Literal, Sequence
 
 import numpy as np
 from numpy.typing import NDArray
@@ -24,10 +24,10 @@ class ClassicalProver:
         )
         return (result.success) and (result.fun == 0)
 
-    def _get_unbounded_bound(self):
+    def _get_unbounded_bound(self) -> tuple[None, None]:
         return (None, None)
 
-    def _get_non_negative_bound(self):
+    def _get_non_negative_bound(self) -> tuple[Literal[0], None]:
         return (0, None)
 
     def _bounds(self, non_negative: int, bounded: int) -> tuple:

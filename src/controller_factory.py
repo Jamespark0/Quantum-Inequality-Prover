@@ -1,5 +1,6 @@
-from src.controller import ConstraintController, InequalityController
-from src.model import CustomizeConstraint, EntropicSpace, Inequality
+from src.controller.constraint_controller import ConstraintController
+from src.controller.inequality_controller import InequalityController
+from src.model import Constraints, EntropicSpace, Inequality
 from src.view import ConstraintView, InequalityView
 
 
@@ -11,14 +12,17 @@ class ControllerFactory:
     """
 
     def __init__(self, space: EntropicSpace) -> None:
-        self.space = space
+        self.n = space.n
+        self.order_pairs = tuple(
+            [pair[0] for pair in sorted(space.to_index.items(), key=lambda x: x[1])]
+        )
 
     def get_constraint_controller(self) -> ConstraintController:
-        constraint_model = CustomizeConstraint(random_variables=self.space.n)
-        constraint_view = ConstraintView(space=self.space)
+        constraint_model = Constraints(n=self.n)
+        constraint_view = ConstraintView(index_order=self.order_pairs)
         return ConstraintController(model=constraint_model, view=constraint_view)
 
     def get_inequality_controller(self):
-        inequality_model = Inequality(n=self.space.n)
-        inequality_view = InequalityView(space=self.space)
+        inequality_model = Inequality(n=self.n)
+        inequality_view = InequalityView(index_order=self.order_pairs)
         return InequalityController(model=inequality_model, view=inequality_view)
