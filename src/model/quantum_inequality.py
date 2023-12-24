@@ -1,4 +1,4 @@
-from dataclasses import InitVar, dataclass
+from dataclasses import dataclass
 from itertools import combinations
 
 import numpy as np
@@ -101,13 +101,3 @@ class QuantumInequality:
     @property
     def ELEMENTAL(self):
         return self._elemental
-
-
-if __name__ == "__main__":
-    n: int = 2
-    space = EntropicSpace(n=n)
-
-    quantum_ineqality = QuantumInequality(space)
-
-    num_inequalities = quantum_ineqality._get_all_type_1().shape[0]
-    print(num_inequalities == 1)
