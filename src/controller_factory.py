@@ -1,6 +1,6 @@
 from src.controller.constraint_controller import ConstraintController
 from src.controller.inequality_controller import InequalityController
-from src.model import Constraints, EntropicSpace, Inequality
+from src.model import Canonical, Constraints, EntropicSpace
 from src.view import ConstraintView, InequalityView
 
 
@@ -23,6 +23,6 @@ class ControllerFactory:
         return ConstraintController(model=constraint_model, view=constraint_view)
 
     def get_inequality_controller(self):
-        inequality_model = Inequality(n=self.n)
+        inequality_model = Canonical(dim=self.n)
         inequality_view = InequalityView(index_order=self.order_pairs)
         return InequalityController(model=inequality_model, view=inequality_view)

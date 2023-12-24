@@ -11,6 +11,7 @@ from src.controller.controller import Controller
 from src.controller.inequality_controller import InequalityController
 from src.controller_factory import ControllerFactory
 from src.model.entropic_space import EntropicSpace
+from src.model.quantum_inequality import QuantumInequality
 
 
 def add_new_constraints(controller: ConstraintController):
@@ -64,7 +65,10 @@ class App:
         factory = ControllerFactory(space=self.space)
         self.constraint_controller = factory.get_constraint_controller()
         self.inequality_controller = factory.get_inequality_controller()
-        self.elemental_inequality = ShannonInequality(
+        # self.elemental_inequality = ShannonInequality(
+        #     entropic_space=self.space
+        # ).ELEMENTAL
+        self.elemental_inequality = QuantumInequality(
             entropic_space=self.space
         ).ELEMENTAL
 

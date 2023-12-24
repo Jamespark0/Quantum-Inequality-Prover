@@ -2,17 +2,17 @@ import numpy as np
 from numpy.typing import NDArray
 
 from src.controller.controller import Controller
-from src.model import Inequality
+from src.model import Canonical
 from src.view import InequalityView
 
 
 class InequalityController(Controller):
-    def __init__(self, model: Inequality, view: InequalityView) -> None:
-        self._model: Inequality = model
+    def __init__(self, model: Canonical, view: InequalityView) -> None:
+        self._model: Canonical = model
         self._view: InequalityView = view
 
     def get_expressions(self) -> NDArray:
-        return self._model.expressions
+        return self._model.inequality
 
     def add_expressions(self):
         self._view.show_rules()
@@ -25,8 +25,8 @@ class InequalityController(Controller):
                     inequality=new_inequality
                 )
 
-                self._model.expressions = np.vstack(
-                    (np.empty((0, self._model.expressions.shape[1])), new_inequality)
+                self._model.inequality = np.vstack(
+                    (np.empty((0, self._model.inequality.shape[1])), new_inequality)
                 )
                 break
             except ValueError as e:
@@ -53,14 +53,14 @@ class InequalityController(Controller):
             list[float]: A list of float which represents the coefficient of the given constraint in canonical form.
         """
         coefficients = inequality.split()
-        if len(coefficients) != self._model.expressions.shape[1]:
+        if len(coefficients) != self._model.inequality.shape[1]:
             raise ValueError(
-                f"The inequality should contains '{self._model.expressions.shape[1]}' coefficients."
+                f"The inequality should contains '{self._model.inequality.shape[1]}' coefficients."
             )
         return list(map(float, coefficients))
 
     def show_expressions(self):
-        self._view.show_expressions(self._model.expressions)
+        self._view.show_expressions(self._model.inequality)
 
 
 if __name__ == "__main__":
@@ -68,7 +68,7 @@ if __name__ == "__main__":
 
     n = 2
     controller = InequalityController(
-        model=Inequality(n=n),
+        model=Canonical(dim=n),
         view=InequalityView(EntropicSpace(n).all_pairs),
     )
 
