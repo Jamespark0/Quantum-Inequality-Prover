@@ -1,21 +1,19 @@
 from abc import ABC, abstractmethod
 
-from numpy.typing import NDArray
 
-
-class Controller(ABC):
+class BaseController(ABC):
     @abstractmethod
-    def get_expressions(self) -> NDArray:
-        raise NotImplementedError
+    def add_inequality(self) -> None:
+        ...
 
     @abstractmethod
-    def add_expressions(self) -> None:
-        raise NotImplementedError
+    def add_constraints(self) -> None:
+        ...
 
     @abstractmethod
-    def _validate_and_format_user_input(self, new_expressions: str) -> list:
-        raise NotImplementedError
+    def show_inequality(self) -> None:
+        ...
 
     @abstractmethod
-    def show_expressions(self) -> None:
-        raise NotImplementedError
+    def show_constraints(self) -> None:
+        ...

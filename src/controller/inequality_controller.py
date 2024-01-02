@@ -1,83 +1,112 @@
+from dataclasses import dataclass
+
 import numpy as np
-from numpy.typing import NDArray
 
-from src.controller.controller import Controller
-from src.model import Canonical
-from src.view import InequalityView
+from src.controller.controller import BaseController
+from src.model import Inequality
+from src.view import TerminalInput, TerminalMessage
 
 
-class InequalityController(Controller):
-    def __init__(self, model: Canonical, view: InequalityView) -> None:
-        self._model: Canonical = model
-        self._view: InequalityView = view
+class DimensionMismatchError(ValueError):
+    """Custom Error for wrong dimensional size error"""
 
-    def get_expressions(self) -> NDArray:
-        return self._model.inequality
+    def __init__(self, expected_dim: int, input_dim: int, message: str) -> None:
+        self.expected_dim = expected_dim
+        self.input_dim = input_dim
+        super().__init__(message)
 
-    def add_expressions(self):
-        self._view.show_rules()
-        print(self._view.get_input_message())
+
+@dataclass(frozen=True)
+class InequalityController(BaseController):
+    model: Inequality
+    messageView: TerminalMessage
+    inputView: TerminalInput
+
+    def add_inequality(self) -> None:
+        """
+        By inputing a new inequality, the new inequality replaces the old one.
+        """
+        for rule in self.messageView.get_inequality_rules():
+            print(rule)
+        print()
+        print(self.messageView.get_input_message())
         while True:
-            new_inequality = self._view.get_user_input()
-
             try:
-                new_inequality = self._validate_and_format_user_input(
-                    inequality=new_inequality
-                )
+                new_inequality = self.inputView.get_inequality()
+                if self._single_expression_validator(new_inequality):
+                    self.model._expression = np.vstack(
+                        (np.empty((0, self.model.dim)), new_inequality)
+                    )
+                    break
+            except DimensionMismatchError as e:
+                print(e)
 
-                self._model.inequality = np.vstack(
-                    (np.empty((0, self._model.inequality.shape[1])), new_inequality)
-                )
-                break
-            except ValueError as e:
-                print(str(e).split("\n")[-1], end="\n" * 2)
-                print("Please enter a new inequality!")
-            except Exception as e:
-                # Handle errors that are not value errors
-                # which I do not expect
-                print(f"Unexpected Error: {e}")
-
-    def _validate_and_format_user_input(self, inequality: str):
+    def add_constraints(self) -> None:
         """
-        Format a single constraint which string into a list of numbers.
-
-        Also check if the constraint has the correct length.
-
-        Args:
-            inequality (str): A single constraint. The coefficients in the canonical form is separated by space.
-
-        Raises:
-            ValueError: If the coefficients does not match the number of joint entropies.
-
-        Returns:
-            list[float]: A list of float which represents the coefficient of the given constraint in canonical form.
+        Add new constraints, while keeping the old constraints intact at the same time
         """
-        coefficients = inequality.split()
-        if len(coefficients) != self._model.inequality.shape[1]:
-            raise ValueError(
-                f"The inequality should contains '{self._model.inequality.shape[1]}' coefficients."
+        for rule in self.messageView.get_constraints_rules():
+            print(rule)
+        print()
+        print(self.messageView.get_input_message())
+
+        while True:
+            try:
+                new_constraints = self.inputView.get_constraints()
+                if all(
+                    [
+                        self._single_expression_validator(constraint)
+                        for constraint in new_constraints
+                    ]
+                ):
+                    self.model._constraints = np.unique(
+                        np.vstack((self.model.constraints, new_constraints)), axis=0
+                    )
+                    break
+            except DimensionMismatchError as e:
+                print(e)
+
+    def show_inequality(self) -> None:
+        print("-" * 50)
+        print("Current inequality:")
+        for inequality in self.messageView.show_inequality(
+            inequalities=self.model.expression
+        ):
+            print(inequality)
+            print()
+
+        print("-" * 50)
+
+    def show_constraints(self) -> None:
+        print("-" * 50)
+        print("Current constraints:")
+        for i, constraint in enumerate(
+            self.messageView.show_constraints(constraints=self.model.constraints),
+            start=1,
+        ):
+            print(f"{i}. {constraint}")
+            print()
+
+        print("-" * 50)
+
+    def _single_expression_validator(self, expression: np.ndarray) -> bool:
+        if expression.shape[0] != self.model.dim:
+            raise DimensionMismatchError(
+                expected_dim=self.model.dim,
+                input_dim=expression.shape[0],
+                message=f"The dimension of the space is {self.model.dim}!",
             )
-        return list(map(float, coefficients))
+        else:
+            return True
 
-    def show_expressions(self):
-        self._view.show_expressions(self._model.inequality)
+    def clear_constraints(self) -> None:
+        self.model._constraints = np.empty((0, self.model.dim))
 
+    # The following two properties are used for passing to the Inequality Prover
+    @property
+    def inequality(self):
+        return self.model.expression
 
-if __name__ == "__main__":
-    from src.model import EntropicSpace
-
-    n = 2
-    controller = InequalityController(
-        model=Canonical(dim=n),
-        view=InequalityView(EntropicSpace(n).all_pairs),
-    )
-
-    print("Initialize:")
-    controller.show_expressions()
-    controller.add_expressions()
-    print("Set 1st:")
-    controller.show_expressions()
-    controller.add_expressions()
-    controller.add_expressions()
-    print("Set2nd:")
-    controller.show_expressions()
+    @property
+    def constraints(self):
+        return self.model.constraints
