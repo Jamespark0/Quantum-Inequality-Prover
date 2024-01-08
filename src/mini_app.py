@@ -1,10 +1,10 @@
 """
 This project only serves a quick preview on how things look like
 """
-
 import os
 import sys
 from dataclasses import InitVar, dataclass
+from functools import partial
 from typing import Callable
 
 from src.controller import InequalityController, Prover
@@ -24,9 +24,20 @@ class MiniApp:
             messageView=TerminalMessage(tuple(space.to_index.keys())),
         )
 
+        add_inequality = partial(
+            self.controller.add_inequality_v2, mapping=space.to_index
+        )
+        add_inequality.__name__ = "add_inequality"
+
+        add_constraint = partial(
+            self.controller.add_single_constraint, mapping=space.to_index
+        )
+        add_constraint.__name__ = "add_one_constraint"
+
+        # All possible actions for this app
         self.actions: dict[str, Callable[[], None]] = {
-            "1": self.controller.add_inequality,
-            "2": self.controller.add_constraints,
+            "1": add_inequality,
+            "2": add_constraint,
             "3": self.controller.clear_constraints,
             "4": self.check_shanno_type,
             "q": self.end_prover,

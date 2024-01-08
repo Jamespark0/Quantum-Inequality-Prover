@@ -41,6 +41,19 @@ class InequalityController(BaseController):
             except DimensionMismatchError as e:
                 print(e)
 
+    def add_inequality_v2(self, mapping: dict[frozenset, int]) -> None:
+        "Replace the old inequality with the new one. This is done by getting the desired coefficients"
+        for rule in self.messageView.get_inequality_rules():
+            print(rule)
+        print()
+        print(self.messageView.get_single_expression_msg())
+        new_inequality = self.inputView.get_single_expression(
+            dim=self.model.dim, mapping=mapping
+        )
+        self.model._expression = np.vstack(
+            (np.empty((0, self.model.dim)), new_inequality)
+        )
+
     def add_constraints(self) -> None:
         """
         Add new constraints, while keeping the old constraints intact at the same time
@@ -65,6 +78,20 @@ class InequalityController(BaseController):
                     break
             except DimensionMismatchError as e:
                 print(e)
+
+    def add_single_constraint(self, mapping: dict[frozenset, int]) -> None:
+        for rule in self.messageView.get_constraints_rules():
+            print(rule)
+        print()
+        print(self.messageView.get_single_expression_msg())
+
+        new_constraint = self.inputView.get_single_expression(
+            dim=self.model.dim, mapping=mapping
+        )
+
+        self.model._constraints = np.unique(
+            np.vstack((self.model.constraints, new_constraint)), axis=0
+        )
 
     def show_inequality(self) -> None:
         print("-" * 50)
