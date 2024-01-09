@@ -9,7 +9,7 @@ from typing import Callable
 
 from src.controller import InequalityController, Prover
 from src.model import EntropicSpace, Inequality, QuantumInequality
-from src.view import TerminalInput, TerminalMessage
+from src.view import ProverResultMessage, TerminalInput, TerminalMessage
 
 
 @dataclass
@@ -83,6 +83,28 @@ class MiniApp:
             )
         ):
             print("It's Shannon_type!")
+            print("\n")
+            used_elemental, used_constraints = self.prover.shortest_proof_generator(
+                inequality=self.controller.inequality,
+                constraints=self.controller.constraints,
+            )
+            (
+                elemental_msg,
+                constraint_msg,
+            ) = ProverResultMessage().generate_shortest_proof(
+                used_elementals=used_elemental,
+                used_constraints=used_constraints,
+                elementals=self.prover.elemental,
+                constraints=self.controller.constraints,
+                index_order=self.controller.messageView.index_order,
+            )
+
+            for _ in elemental_msg:
+                print(_)
+            print()
+            for _ in constraint_msg:
+                print(_)
+
         else:
             print("It's not provable by ITIP :(")
 
