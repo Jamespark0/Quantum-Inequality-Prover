@@ -1,6 +1,8 @@
 import numpy as np
+import pytest
 from pytest import MonkeyPatch
 
+from src.util.convertor import InvalidPairError
 from src.view import TerminalInput
 
 
@@ -116,4 +118,47 @@ def test_all_numeric_but_different_dim(monkeypatch: MonkeyPatch) -> None:
                 for constraint in valid_input.split(",")
             ]
         )
+    ).all()
+
+
+def test_single_assignment() -> None:
+    assignment = "1 -> 3"
+
+    assert TerminalInput()._get_index_coefficient(string=assignment) == (
+        frozenset({1}),
+        3,
+    )
+
+
+def test_marginal_pair_assignment() -> None:
+    assignment = "1 2 -> 3"
+    assert TerminalInput()._get_index_coefficient(assignment) == (frozenset({1, 2}), 3)
+
+
+def test_invalid_pair_assignment() -> None:
+    assignment = "   1   a   -> 2"
+    with pytest.raises(InvalidPairError):
+        TerminalInput()._get_index_coefficient(assignment)
+
+
+def test_invalid_coefficient_assignment() -> None:
+    assignment = "    1  3 -> hello"
+    with pytest.raises(ValueError):
+        TerminalInput()._get_index_coefficient(assignment)
+
+
+def test_get_single_expression(monkeypatch: MonkeyPatch) -> None:
+    from src.model import EntropicSpace
+
+    assignment = "1 2 -> 3; 1 -> 2; 3 -> 4"
+
+    monkeypatch.setattr("builtins.input", lambda _: assignment)
+
+    space = EntropicSpace(n=3)
+
+    assert (
+        TerminalInput().get_single_expression(
+            dim=len(space.all_pairs), mapping=space.to_index
+        )
+        == np.array([2, 0, 4, 3, 0, 0, 0])
     ).all()

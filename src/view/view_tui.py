@@ -5,10 +5,13 @@ from dataclasses import dataclass
 import numpy as np
 from numpy.typing import NDArray
 
-from src.util import to_joint_entropy
+from src.util import to_joint_entropy, turn_str_to_pair
+from src.util.convertor import InvalidPairError
 from src.view.view import BaseInput, BaseMessage
 
 logging.basicConfig(level=logging.INFO)
+
+ASSIGNMENT_SYMBOL = "->"
 
 
 @dataclass(frozen=True)
@@ -58,6 +61,13 @@ class TerminalMessage(BaseMessage):
             + f'{", ".join(f"a({i})" for i in range(1, len(self.index_order) + 1))}'
         )
 
+    def get_single_expression_msg(self) -> str:
+        return (
+            "Input the coefficients as the following:\n"
+            + f"{repr('pair[separated by space] -> coefficients')}."
+            + f"Different coefficients are separated by {repr(';')}"
+        )
+
 
 @dataclass(frozen=True)
 class TerminalInput(BaseInput):
@@ -66,6 +76,28 @@ class TerminalInput(BaseInput):
     numpy.array respectively.
 
     """
+
+    def _get_index_coefficient(self, string: str) -> tuple[frozenset, float]:
+        """
+        Turn a string to a tuple of frozentset which holds the info of the current pair and the
+        corresponding coefficient value.
+
+        Args:
+            string (str): string to be converted into (pair, coefficient)
+
+        Raises:
+            SyntaxError: If more than one "->" occurs
+        """
+        split_symbol = ASSIGNMENT_SYMBOL
+
+        pair, coefficient, *_ = string.split(split_symbol)
+
+        if len(_) != 0:
+            raise SyntaxError(
+                f"Coefficient assignement involves only one {repr(split_symbol)}"
+            )
+
+        return (turn_str_to_pair(string=pair), float(coefficient))
 
     def get_inequality(self) -> NDArray[np.float64]:
         while True:
@@ -94,3 +126,26 @@ class TerminalInput(BaseInput):
 
             except Exception as e:
                 logging.warning(f"Unexpected: {e}")
+
+    def get_single_expression(
+        self, dim: int, mapping: dict[frozenset, int]
+    ) -> NDArray[np.float64]:
+        expression = np.zeros(dim)
+        while True:
+            indices_coefficients = input("# ").split(";")
+            try:
+                for index_constraint in indices_coefficients:
+                    pair, coefficient = self._get_index_coefficient(
+                        string=index_constraint
+                    )
+                    expression[mapping.get(pair, len(mapping))] = coefficient
+
+                return expression
+            except InvalidPairError as e:
+                print(e)
+
+            except ValueError as e:
+                print(e)
+
+            except Exception as e:
+                print(f"Unexpected error: {e}")
