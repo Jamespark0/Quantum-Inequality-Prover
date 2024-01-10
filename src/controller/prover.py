@@ -15,8 +15,9 @@ class Prover:
             c=-np.zeros(self.elemental.shape[0] + constraints.shape[0]),
             A_eq=np.vstack((self.elemental, -constraints)).transpose(),
             b_eq=inequality,
-            bounds=self._bounds(
-                non_negative=self.elemental.shape[0], unbounded=constraints.shape[0]
+            bounds=tuple(
+                [(0, None)] * self.elemental.shape[0]
+                + [(None, None)] * constraints.shape[0]
             ),
         )
 
@@ -49,7 +50,7 @@ class Prover:
             self.elemental.shape[0] + 2 * constraints.shape[0],
         ):
             A_ub[row][row] = -1
-            A_ub[row][row + constraints.shape[0]] = -1
+            A_ub[row][row - constraints.shape[0]] = -1
 
         result = linprog(
             c=np.array(
@@ -84,9 +85,3 @@ class Prover:
             if result.success
             else (None, None)
         )
-
-    def _bounds(self, non_negative: int, unbounded: int) -> tuple:
-        y_bounds = tuple([(0, None)] * non_negative)
-        mu_bounds = tuple([(None, None)] * unbounded)
-
-        return tuple([*y_bounds, *mu_bounds])
