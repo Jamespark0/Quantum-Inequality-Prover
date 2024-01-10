@@ -11,7 +11,7 @@ def to_joint_entropy(pair: set | frozenset):
 
 
 def vec_to_entropy_expression(vec: Sequence, index_order: Sequence[frozenset]) -> str:
-    return f"{' + '.join([f'{coefficient}*{to_joint_entropy(pair)}' for coefficient, pair in zip(vec, index_order) if coefficient != 0])}"
+    return f"{' + '.join([f'{coefficient} x {to_joint_entropy(pair)}' for coefficient, pair in zip(vec, index_order) if coefficient != 0])}"
 
 
 def turn_str_to_pair(string: str) -> frozenset:

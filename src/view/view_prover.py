@@ -26,7 +26,7 @@ class ProverResultMessage:
         if used_elementals is not None:
             msg_elementals: tuple = (
                 "The following elemental inequalities are used:",
-                f'{(" + " + nl).join([f"{used} * [{vec_to_entropy_expression(vec=elemental, index_order = index_order)}]" for used, elemental in zip(used_elementals, elementals) if used != 0])}',
+                f'{(" + " + nl).join([f"{used} x [{vec_to_entropy_expression(vec=elemental, index_order = index_order)}]" for used, elemental in zip(used_elementals, elementals) if used != 0])}',
             )
         else:
             msg_elementals = tuple()
@@ -34,7 +34,7 @@ class ProverResultMessage:
         if used_constraints is not None and len(used_constraints) != 0:
             msg_constraints: tuple = (
                 "The following constraints are used:",
-                f'{(" + " + nl).join([f"{used} * [{vec_to_entropy_expression(vec=constraint, index_order = index_order)}]" for used, constraint in zip(used_constraints, constraints) if used != 0])}',
+                f'{(" + " + nl).join([f"{used} x [{vec_to_entropy_expression(vec=constraint, index_order = index_order)}]" for used, constraint in zip(used_constraints, constraints) if used != 0])}',
             )
         else:
             msg_constraints = tuple()
