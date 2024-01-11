@@ -3,7 +3,7 @@ This project only serves a quick preview on how things look like
 """
 import os
 import sys
-from dataclasses import InitVar, dataclass
+from dataclasses import dataclass
 from functools import partial
 from typing import Callable
 
@@ -14,10 +14,11 @@ from src.view import ProverResultMessage, TerminalInput, TerminalMessage
 
 @dataclass
 class MiniApp:
-    n: InitVar[int]
+    # Number of random variables
+    n: int
 
-    def __post_init__(self, n: int) -> None:
-        space = EntropicSpace(n=n)
+    def __post_init__(self) -> None:
+        space = EntropicSpace(n=self.n)
         self.controller = InequalityController(
             model=Inequality(dim=len(space.all_pairs)),
             inputView=TerminalInput(),
@@ -39,7 +40,7 @@ class MiniApp:
             "1": add_inequality,
             "2": add_constraint,
             "3": self.controller.clear_constraints,
-            "4": self.check_shanno_type,
+            "4": self.check_shannon_type,
             "q": self.end_prover,
         }
         self.prover: Prover = Prover(elemental=QuantumInequality(space=space).ELEMENTAL)
@@ -72,7 +73,7 @@ class MiniApp:
         print("Prover ends!")
         sys.exit()
 
-    def check_shanno_type(self) -> None:
+    def check_shannon_type(self) -> None:
         if self.controller.inequality.shape[0] == 0:
             print("Please add an inequality")
 
@@ -99,14 +100,44 @@ class MiniApp:
                 index_order=self.controller.messageView.index_order,
             )
 
-            for _ in elemental_msg:
-                print(_)
+            if len(elemental_msg) > 0:
+                print(elemental_msg[0])
+                for _ in elemental_msg[1:]:
+                    print(_ + " >= 0")
             print()
-            for _ in constraint_msg:
-                print(_)
+            if len(constraint_msg) > 0:
+                print(constraint_msg[0])
+                for _ in constraint_msg[1:]:
+                    print(_ + " = 0")
 
         else:
             print("It's not provable by ITIP :(")
+            print()
+            used_elemental, used_constraints = self.prover.shortest_disprove_generator(
+                n=self.n,
+                inequality=self.controller.inequality,
+                constraints=self.controller.constraints,
+            )
+            (
+                elemental_msg,
+                constraint_msg,
+            ) = ProverResultMessage().generate_shortest_disprove(
+                used_elementals=used_elemental,
+                used_constraints=used_constraints,
+                elementals=self.prover.elemental,
+                constraints=self.controller.constraints,
+                index_order=self.controller.messageView.index_order,
+            )
+
+            if len(elemental_msg) > 0:
+                print(elemental_msg[0])
+                for _ in elemental_msg[1:]:
+                    print(_ + " = 0")
+            print()
+            if len(constraint_msg) > 0:
+                print(constraint_msg[0])
+                for _ in constraint_msg[1:]:
+                    print(_ + " = 0")
 
         print("\n" * 5)
         input("Press anything to continue...")
