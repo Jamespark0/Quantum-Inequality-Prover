@@ -23,7 +23,6 @@ class ProverResultMessage:
         Returns:
             str: Expressed in coefficients times joint entropy
         """
-        nl = "\n"
         if used_elementals is not None:
             msg_elementals: tuple = tuple(
                 [

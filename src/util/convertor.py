@@ -7,7 +7,7 @@ class InvalidPairError(IndexError):
 
 
 def to_joint_entropy(pair: set | frozenset):
-    return f'H({",".join(str(x) for x in tuple(pair))})'
+    return f'S({",".join(str(x) for x in tuple(pair))})'
 
 
 def vec_to_entropy_expression(vec: Sequence, index_order: Sequence[frozenset]) -> str:
