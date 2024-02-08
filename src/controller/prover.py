@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from xml.dom.minidom import Element
 
 import numpy as np
 from numpy.typing import NDArray

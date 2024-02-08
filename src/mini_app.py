@@ -1,6 +1,7 @@
 """
 This project only serves a quick preview on how things look like
 """
+
 import os
 import sys
 from dataclasses import dataclass
@@ -83,7 +84,7 @@ class MiniApp:
                 constraints=self.controller.constraints,
             )
         ):
-            print("It's Shannon_type!")
+            print("It's von-Neumann type!")
             print("\n")
             used_elemental, used_constraints = self.prover.shortest_proof_generator(
                 inequality=self.controller.inequality,
@@ -111,7 +112,7 @@ class MiniApp:
                     print(_ + " = 0")
 
         else:
-            print("It's not provable by ITIP :(")
+            print("It's not provable by Quantum ITIP :(")
             print()
             used_elemental, used_constraints = self.prover.shortest_disprove_generator(
                 n=self.n,
