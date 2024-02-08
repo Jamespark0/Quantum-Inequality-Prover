@@ -6,7 +6,7 @@ import numpy as np
 from numpy.typing import NDArray
 
 from src.util import to_joint_entropy, turn_str_to_pair
-from src.util.convertor import InvalidPairError
+from src.util.convertor import InvalidPairError, vec_to_entropy_expression
 from src.view.view import BaseInput, BaseMessage
 
 logging.basicConfig(level=logging.INFO)
@@ -24,7 +24,8 @@ class TerminalMessage(BaseMessage):
 
     def _show_expressions(self, expressions: NDArray, ending: str) -> tuple[str, ...]:
         messages = [
-            f'{" + ".join(f"{coefficient} * {to_joint_entropy(self.index_order[i])}" for i, coefficient in enumerate(expression))}'
+            # f'{" + ".join(f"{coefficient} * {to_joint_entropy(self.index_order[i])}" for i, coefficient in enumerate(expression))}'
+            vec_to_entropy_expression(vec=expression, index_order=self.index_order)
             + ending
             for expression in expressions
         ]
