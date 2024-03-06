@@ -50,7 +50,9 @@ The inequality should be expressed in terms of the marginal entropies, and takes
 If the inequality has more than one coefficient to assign (which is often the case), each assignment is separated by ';'.
 
 For example, if the inequality to be checked is 
-$$ I(1;2\mid 3) = S(1, 3) + S(2, 3) - S(1,2,3) - S(3), $$
+```math
+I(1;2\mid 3) = S(1, 3) + S(2, 3) - S(1,2,3) - S(3),
+```
 
 one should input something like:
 
