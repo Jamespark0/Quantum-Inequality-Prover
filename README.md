@@ -51,7 +51,7 @@ If the inequality has more than one coefficient to assign (which is often the ca
 
 For example, if the inequality to be checked is 
 ```math
-I(1;2\mid 3) = S(1, 3) + S(2, 3) - S(1,2,3) - S(3),
+I(1;2\mid 3) = S(1, 3) + S(2, 3) - S(1,2,3) - S(3) \geq 0,
 ```
 
 one should input something like:
