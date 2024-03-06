@@ -8,6 +8,21 @@ An information prover dedicated to quantum information theory.
 
 ---
 
+## Table of Contents
+- [Table of Contents](#table-of-contents)
+- [What is Quantum ITIP?](#what-is-quantum-itip)
+- [Features](#features)
+- [Usages](#usages)
+  - [Initialization:](#initialization)
+  - [Choose actions:](#choose-actions)
+    - [Add inequality:](#add-inequality)
+    - [Add one constraint:](#add-one-constraint)
+    - [Clear constraints:](#clear-constraints)
+    - [Check von-Neumann type:](#check-von-neumann-type)
+    - [End prover:](#end-prover)
+- [Credits](#credits)
+- [Warning](#warning)
+
 ## What is Quantum ITIP?
 Quantum ITIP automatically proves if a quantum information inequality can be derived from strong subadditivity and weak monotonicity in quantum information theory. If this is the case, this prover generates a set of inequalities that can be used to prove the inequality; otherwise, it generates a set of inequalities to help build a counterexample to "disprove" the inequality. Note that a counterexample may not be found due to the nature of quantum information inequality.
 
@@ -15,13 +30,13 @@ Quantum ITIP automatically proves if a quantum information inequality can be der
 1. The inequality to be proved can have additional constraints imposed by the user.
 2. The prover helps prove and disprove the given inequality.
 
-## Usages
-### Initialization:
+## Usages<a name="usages"></a>
+### Initialization:<a name="initialization"></a>
 Before entering the main page, the prover asks the number of quantum systems to be worked with. Enter an integer greater than 2. For example, if we are to work with 4 quantum systems:
 
 ![init](https://imgur.com/TOzrWY2.png)
 
-### Choose actions:
+### Choose actions:<a name="choose-actions"></a>
 The homepage shows a list of actions that a user can choose from:
 
 1. add/update an inequality
@@ -37,7 +52,7 @@ The action is activated by typing in the index next to the action. For example,
 
 `Pick an action: q` ends the prover.
 
-#### Add inequality:
+#### Add inequality:<a name="add-inequality"></a>
 ![add\update inequality](https://imgur.com/8i5FcVY.png)
 The inequality should be expressed in terms of the marginal entropies, and takes the form:
 
@@ -60,7 +75,7 @@ one should input something like:
 
 where the order does not matter.
 
-#### Add one constraint:
+#### Add one constraint:<a name="add-one-constraint"></a>
 This prover current allows only adding **one equality constraint** at a time. The constraint is expressed in the form of marginal entropies just like the inequality to be proved, and the equality constraint takes the form:
 
 `[linear combination of marginal entropies] = 0`.
@@ -69,10 +84,10 @@ The way to assign the coefficients in the constraint is identical to assigning t
 
 ![add one constraint](https://imgur.com/TFT9vUE.png)
 
-#### Clear constraints:
+#### Clear constraints:<a name="clear-constraints"></a>
 This clears all the constraints provided by the user. 
 
-#### Check von-Neumann type:
+#### Check von-Neumann type:<a name="check-type"></a>
 By choosing this functionality, the prover check if the given inequality, under the imposed constraints, can be derived from strong sub-additivity and weak monotonicity. The program returns one of the two possible outcomes:
 
 1. `It's von-Neumann type!` The prover shows how to construct the inequality from strong subadditivity and from weak monotonicity altogether.
@@ -84,7 +99,7 @@ For example,
 2. Conditional entropy can be negative in quantum information theory. If we are to show $S(1\mid 2) \geq 0$ cannot be derived from strong subadditivity and weak monotonicity, the prover suggests the following result to disprove the inequality
 [![negativity of conditional entropy](https://imgur.com/Q6ovlmk.png)](https://imgur.com/Q6ovlmk)
 
-#### End prover:
+#### End prover:<a name="end"></a>
 This terminates the program.
 
 ## Credits
