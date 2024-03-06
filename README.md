@@ -19,7 +19,7 @@ Quantum ITIP automatically proves if a quantum information inequality can be der
 ### Initialization:
 Before entering the main page, the prover asks the number of quantum systems to be worked with. Enter an integer greater than 2. For example, if we are to work with 4 quantum systems:
 
-![init](https://imgur.com/l0K037b.png)
+![init](https://imgur.com/TOzrWY2.png)
 
 ### Choose actions:
 The homepage shows a list of actions that a user can choose from:
@@ -38,7 +38,7 @@ The action is activated by typing in the index next to the action. For example,
 `Pick an action: q` ends the prover.
 
 #### Add inequality:
-![add\update inequality](https://imgur.com/yknrKkm.png)
+![add\update inequality](https://imgur.com/8i5FcVY.png)
 The inequality should be expressed in terms of the marginal entropies, and takes the form:
 
 `[A linear combination of marginal entropis] >= 0`
@@ -73,7 +73,16 @@ The way to assign the coefficients in the constraint is identical to assigning t
 This clears all the constraints provided by the user. 
 
 #### Check von-Neumann type:
-TODO
+By choosing this functionality, the prover check if the given inequality, under the imposed constraints, can be derived from strong sub-additivity and weak monotonicity. The program returns one of the two possible outcomes:
+
+1. `It's von-Neumann type!` The prover shows how to construct the inequality from strong subadditivity and from weak monotonicity altogether.
+2. `It's not provable by  :(` This indicates that the inequality cannot be derived from strong subadditivity and from weak monotonicity. It also generates a list of **equalities** that the counterexample can satisfy. Note that the hints provided by the prover is a sufficient condition not a necessary condition.
+
+For example, 
+1. The non-negativity of quantum entropy. Let's say to prove the marginal entropy $S(1)$ which indicates the quantum entropy of system $1$ is non-negative, the prover generates the following result
+![non-negativity of quantum entropy](https://imgur.com/BrXJBBb.png)
+2. Conditional entropy can be negative in quantum information theory. If we are to show $S(1\mid 2) \geq 0$ cannot be derived from strong subadditivity and weak monotonicity, the prover suggests the following result to disprove the inequality
+![negativity of conditional entropy](https://imgur.com/Q6ovlmk.png)
 
 #### End prover:
 This terminates the program.
