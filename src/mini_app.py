@@ -41,7 +41,7 @@ class MiniApp:
             "1": add_inequality,
             "2": add_constraint,
             "3": self.controller.clear_constraints,
-            "4": self.check_shannon_type,
+            "4": self.check_von_Neumann_type,
             "q": self.end_prover,
         }
         self.prover: Prover = Prover(elemental=QuantumInequality(space=space).ELEMENTAL)
@@ -74,7 +74,7 @@ class MiniApp:
         print("Prover ends!")
         sys.exit()
 
-    def check_shannon_type(self) -> None:
+    def check_von_Neumann_type(self) -> None:
         if self.controller.inequality.shape[0] == 0:
             print("Please add an inequality")
 
