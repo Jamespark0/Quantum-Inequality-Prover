@@ -147,11 +147,11 @@ class MiniApp:
 if __name__ == "__main__":
     while True:
         n = input("Input the number of systems: ")
-        if n.isdigit() and int(n) > 0:
+        if n.isdigit() and int(n) > 1:
             n = int(n)
             break
         else:
-            print("Input a positive integer")
+            print("Input an integer greater than 1")
 
     app = MiniApp(n)
     app.start()

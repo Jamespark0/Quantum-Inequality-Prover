@@ -33,21 +33,21 @@ class Prover:
 
         Following from the paper, "Proving and Disproving Information Inequalities"
         """
+        # For -z <= mu <= z
         A_ub = np.zeros(
             (
-                self.elemental.shape[0] + 2 * constraints.shape[0],
+                # self.elemental.shape[0] + 2 * constraints.shape[0],
+                2 * constraints.shape[0],
                 self.elemental.shape[0] + 2 * constraints.shape[0],
             )
         )
         # Ensure -z <= mu <= z
+        for row in range(constraints.shape[0]):
+            A_ub[row][row + self.elemental.shape[0]] = 1
+            A_ub[row][row + self.elemental.shape[0] + constraints.shape[0]] = -1
         for row in range(
-            self.elemental.shape[0], self.elemental.shape[0] + constraints.shape[0]
-        ):
-            A_ub[row][row] = 1
-            A_ub[row][row + constraints.shape[0]] = -1
-        for row in range(
-            self.elemental.shape[0] + constraints.shape[0],
-            self.elemental.shape[0] + 2 * constraints.shape[0],
+            constraints.shape[0],
+            2 * constraints.shape[0],
         ):
             A_ub[row][row] = -1
             A_ub[row][row - constraints.shape[0]] = -1
@@ -69,9 +69,10 @@ class Prover:
             b_eq=inequality,
             bounds=tuple(
                 [(0, None)] * len(self.elemental)
-                + [(None, None)] * (2 * constraints.shape[0])
+                + [(None, None)] * (constraints.shape[0])
+                + [(0, None)] * (constraints.shape[0])
             ),
-            b_ub=np.zeros(self.elemental.shape[0] + 2 * constraints.shape[0]),
+            b_ub=np.zeros(2 * constraints.shape[0]),
             A_ub=A_ub,
         )
         return (
@@ -95,10 +96,7 @@ class Prover:
         # The minimum value should be positive, as linprog finds minimum value
         result = linprog(
             c=np.array(
-                [
-                    0 if i < (self.elemental.shape[0] + constraints.shape[0]) else 1
-                    for i in range(self.elemental.shape[0] + constraints.shape[0] + n)
-                ]
+                [0] * (self.elemental.shape[0] + constraints.shape[0]) + [1] * n
             ),
             A_eq=np.vstack(
                 (
