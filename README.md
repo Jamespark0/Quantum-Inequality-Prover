@@ -47,7 +47,7 @@ The inequality should be expressed in terms of the marginal entropies, and takes
 
 `[indices of the systems] -> [coefficient value]`
 
-If the inequality has more than one coefficient to assign (which is often the case), each assignment is separated by ';'.
+If the inequality has more than one coefficient to assign (which is often the case), each assignment is separated by ';'. Those coefficients not specified by the user will be set to $0$.
 
 For example, if the inequality to be checked is 
 ```math
@@ -59,6 +59,24 @@ one should input something like:
 `1 3 -> 1; 2 3 -> 1; 1 2 3 -> -1; 3 -> -1`
 
 where the order does not matter.
+
+#### Add one constraint:
+This prover current allows only adding **one equality constraint** at a time. The constraint is expressed in the form of marginal entropies just like the inequality to be proved, and the equality constraint takes the form:
+
+`[linear combination of marginal entropies] = 0`.
+
+The way to assign the coefficients in the constraint is identical to assigning the coefficients in the inequality.
+
+![add one constraint](https://imgur.com/TFT9vUE.png)
+
+#### Clear constraints:
+This clears all the constraints provided by the user. 
+
+#### Check von-Neumann type:
+TODO
+
+#### End prover:
+This terminates the program.
 
 ## Credits
 This work is inspired by the classical ITIP formulated by Siu Wai Ho, Alex Lin Ling, Chee Wei Tan and Raymond Yeung. More information can be found from [the AITIP website](https://aitip.org).
