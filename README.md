@@ -76,7 +76,7 @@ This clears all the constraints provided by the user.
 By choosing this functionality, the prover check if the given inequality, under the imposed constraints, can be derived from strong sub-additivity and weak monotonicity. The program returns one of the two possible outcomes:
 
 1. `It's von-Neumann type!` The prover shows how to construct the inequality from strong subadditivity and from weak monotonicity altogether.
-2. `It's not provable by  :(` This indicates that the inequality cannot be derived from strong subadditivity and from weak monotonicity. It also generates a list of **equalities** that the counterexample can satisfy. Note that the hints provided by the prover is a sufficient condition not a necessary condition.
+2. `It's not provable by Quantum ITIP :(` This indicates that the inequality cannot be derived from strong subadditivity and from weak monotonicity. It also generates a list of **equalities** that the counterexample can satisfy. Note that the hints provided by the prover is a sufficient condition not a necessary condition.
 
 For example, 
 1. The non-negativity of quantum entropy. Let's say to prove the marginal entropy $S(1)$ which indicates the quantum entropy of system $1$ is non-negative, the prover generates the following result
