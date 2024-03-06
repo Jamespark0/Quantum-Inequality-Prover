@@ -1,3 +1,4 @@
+import os
 from dataclasses import dataclass
 
 import numpy as np
@@ -94,7 +95,8 @@ class InequalityController(BaseController):
         )
 
     def show_inequality(self) -> None:
-        print("-" * 50)
+        window_size: int = os.get_terminal_size().columns
+        print("-" * window_size)
         print("Current inequality:")
         for inequality in self.messageView.show_inequality(
             inequalities=self.model.expression
@@ -102,10 +104,11 @@ class InequalityController(BaseController):
             print(inequality)
             print()
 
-        print("-" * 50)
+        print("-" * window_size)
 
     def show_constraints(self) -> None:
-        print("-" * 50)
+        window_size: int = os.get_terminal_size().columns
+        print("-" * window_size)
         print("Current constraints:")
         for i, constraint in enumerate(
             self.messageView.show_constraints(constraints=self.model.constraints),
@@ -114,7 +117,7 @@ class InequalityController(BaseController):
             print(f"{i}. {constraint}")
             print()
 
-        print("-" * 50)
+        print("-" * window_size)
 
     def _single_expression_validator(self, expression: np.ndarray) -> bool:
         if expression.shape[0] != self.model.dim:
