@@ -39,7 +39,7 @@ $$\hat{\rho}_{A} = \mathrm{Tr}_{B}(\hat{\rho}_{AB})$$
 
 where $\hat{\rho}_{A}$ is also called the **reduced density matrix** of $\hat{\rho}_{AB}$.
 
-The quantum entropy (also known as von-Neumann entropy) of a density matrix $\hat{\rho}$ is defined as 
+The quantum entropy (also known as von-Neumann entropy) of a density matrix $`\hat{\rho}`$ is defined as 
 
 $$
 S(\hat{\rho}) = -\mathrm{Tr}(\hat{\rho}\log\hat{\rho}).
@@ -97,7 +97,9 @@ $$
 
 one should input something like:
 
-`1 3 -> 1; 2 3 -> 1; 1 2 3 -> -1; 3 -> -1`
+```
+1 3 -> 1; 2 3 -> 1; 1 2 3 -> -1; 3 -> -1
+```
 
 where the order does not matter.
 
