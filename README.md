@@ -34,24 +34,24 @@ Quantum ITIP automatically proves if a quantum information inequality can be der
 
 ## Introduction
 A quantum state can be described by a density matrix $\hat{\rho}$. If we are only interested in parts of the quantum system, we can trace out the parts that do not belong in those of our interests. For example, assume we only have access to a part of a bipartite system $AB$ whose density matrix is denoted as $\hat{\rho}_{AB}$. Without loss of generality, the system accessible to us is $A$. The corresponding density matrix of system $A$ is defined as 
-
-$$\hat{\rho}_{A} = \mathrm{Tr}_{B}(\hat{\rho}_{AB})$$
-
-where $\hat{\rho}_{A}$ is also called the **reduced density matrix** of $\hat{\rho}_{AB}$.
+```math
+\hat{\rho}_{A} = \mathrm{Tr}_{B}(\hat{\rho}_{AB})
+```
+where $\hat{\rho}_{A}$ is also called the **reduced density matrix** of $`\hat{\rho}_{AB}`$.
 
 The quantum entropy (also known as von-Neumann entropy) of a density matrix $`\hat{\rho}`$ is defined as 
 
-$$
+```math
 S(\hat{\rho}) = -\mathrm{Tr}(\hat{\rho}\log\hat{\rho}).
-$$
+```
 
-One can also apply this formula to any reduced density matrix of some quantum system. There are a set of rules that a quantum system must satisfy. These rules are **strong sub-additivity** and **weak monotonicity**. Consider an $n-$party quantum system. Let $N$ be the set $\set{1,2,...,n}$ and $I, J\subseteq N$, the general form of strong sub-addivity and weak monotoncity[[1]](#1) is given as 
-$$
+One can also apply this formula to any reduced density matrix of some quantum system. There are a set of rules that a quantum system must satisfy. These rules are **strong sub-additivity** and **weak monotonicity**. Consider an $`n-`$party quantum system. Let $N$ be the set $\set{1,2,...,n}$ and $I, J\subseteq N$, the general form of strong sub-addivity and weak monotoncity[[1]](#1) is given as 
+```math
 \begin{cases}
 S(\hat{\rho}_{I}) + S(\hat{\rho}_{J}) \geq S(\hat{\rho}_{I \cup J}) + S(\hat{\rho}_{I \cap J})\\
 S(\hat{\rho}_{I}) + S(\hat{\rho}_{J}) \geq S(\hat{\rho}_{I \setminus J}) + S(\hat{\rho}_{J \setminus I})
 \end{cases}.
-$$
+```
 The set of these inequalities are referred to as **basic inequalities**.
 
 Information inequalities play a crucial role in information theory. Proving if an inequality can be derived from the basic inequalities is no easy task in quantum information theory, and neither is its counterpart in classical information theory. In classical information theory, there are a lot of tools to help do the job. As far as we know, there is no such tool in quantum information theory. This prover hopes to be the cornerstone to bridge the gap.
@@ -91,9 +91,9 @@ The inequality should be expressed in terms of the marginal entropies, and takes
 If the inequality has more than one coefficient to assign (which is often the case), each assignment is separated by ';'. Those coefficients not specified by the user will be set to $0$.
 
 For example, if the inequality to be checked is 
-$$
+```math
 I(1;2\mid 3) = S(1, 3) + S(2, 3) - S(1,2,3) - S(3) \geq 0,
-$$
+```
 
 one should input something like:
 
@@ -123,8 +123,11 @@ By choosing this functionality, the prover check if the given inequality, under 
 
 For example, 
 1. The non-negativity of quantum entropy. Let's say to prove the marginal entropy $S(1)$ which indicates the quantum entropy of system $1$ is non-negative, the prover generates the following result
-[![non-negativity of quantum entropy](https://imgur.com/BrXJBBb.png)](https://imgur.com/BrXJBBb)
+
+![non-negativity of quantum entropy](https://imgur.com/BrXJBBb.png)
+
 2. Conditional entropy can be negative in quantum information theory. If we are to show $S(1\mid 2) \geq 0$ cannot be derived from basic inequalities, the prover suggests the following result to disprove the inequality
+
 ![negativity of conditional entropy](https://imgur.com/gCZsFvI.png)
 
 #### End prover<a name="end"></a>
@@ -133,7 +136,7 @@ This terminates the program.
 ## Credits
 This work is inspired by the classical ITIP formulated by Siu Wai Ho, Alex Lin Ling, Chee Wei Tan and Raymond Yeung. More information can be found from [the AITIP website](https://aitip.org).
 
-I would like to thank Professor Mario Berta and Tobias. This project would not be possible without their supoorts and guidance.
+I would like to thank Professor Mario Berta and Tobias Rippchen. This project would not be possible without their supoorts and guidance.
 
 ## Warning
 This is a master-thesis project, and still has a lot of rooms for improvements.
