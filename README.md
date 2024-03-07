@@ -13,6 +13,7 @@ An information prover dedicated to quantum information theory.
 - [What is Quantum ITIP?](#what-is-quantum-itip)
 - [Features](#features)
 - [Introduction](#introduction)
+- [Quickstart](#quickstart)
 - [Usages](#usages)
   - [Initialization](#initialization)
   - [Choose actions](#choose-actions)
@@ -55,6 +56,15 @@ S(\hat{\rho}_{I}) + S(\hat{\rho}_{J}) \geq S(\hat{\rho}_{I \setminus J}) + S(\ha
 The set of these inequalities are referred to as **basic inequalities**.
 
 Information inequalities play a crucial role in information theory. Proving if an inequality can be derived from the basic inequalities is no easy task in quantum information theory, and neither is its counterpart in classical information theory. In classical information theory, there are a lot of tools to help do the job. As far as we know, there is no such tool in quantum information theory. This prover hopes to be the cornerstone to bridge the gap.
+
+## Quickstart
+There are two ways to use this project.
+
+1. If you are running macOS on your device, you can download the `mini_app.exe` file. Double click the program and everything should work fine.
+2. Download the entire directory. Install all the dependencies with `requirements.txt`. Navigate to the directory from the terminal and run
+```
+python -m src.mini_app
+```
 
 ## Usages<a name="usages"></a>
 ### Initialization<a name="initialization"></a>
