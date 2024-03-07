@@ -123,8 +123,11 @@ By choosing this functionality, the prover check if the given inequality, under 
 
 For example, 
 1. The non-negativity of quantum entropy. Let's say to prove the marginal entropy $S(1)$ which indicates the quantum entropy of system $1$ is non-negative, the prover generates the following result
+
 ![non-negativity of quantum entropy](https://imgur.com/BrXJBBb.png)
+
 2. Conditional entropy can be negative in quantum information theory. If we are to show $S(1\mid 2) \geq 0$ cannot be derived from basic inequalities, the prover suggests the following result to disprove the inequality
+
 ![negativity of conditional entropy](https://imgur.com/gCZsFvI.png)
 
 #### End prover<a name="end"></a>
