@@ -91,13 +91,15 @@ The inequality should be expressed in terms of the marginal entropies, and takes
 If the inequality has more than one coefficient to assign (which is often the case), each assignment is separated by ';'. Those coefficients not specified by the user will be set to $0$.
 
 For example, if the inequality to be checked is 
-$$
+```math
 I(1;2\mid 3) = S(1, 3) + S(2, 3) - S(1,2,3) - S(3) \geq 0,
-$$
+```
 
 one should input something like:
 
-`1 3 -> 1; 2 3 -> 1; 1 2 3 -> -1; 3 -> -1`
+```
+1 3 -> 1; 2 3 -> 1; 1 2 3 -> -1; 3 -> -1
+```
 
 where the order does not matter.
 
@@ -121,9 +123,9 @@ By choosing this functionality, the prover check if the given inequality, under 
 
 For example, 
 1. The non-negativity of quantum entropy. Let's say to prove the marginal entropy $S(1)$ which indicates the quantum entropy of system $1$ is non-negative, the prover generates the following result
-[![non-negativity of quantum entropy](https://imgur.com/BrXJBBb.png)](https://imgur.com/BrXJBBb)
+![non-negativity of quantum entropy](https://imgur.com/BrXJBBb.png|width=100)
 2. Conditional entropy can be negative in quantum information theory. If we are to show $S(1\mid 2) \geq 0$ cannot be derived from basic inequalities, the prover suggests the following result to disprove the inequality
-![negativity of conditional entropy](https://imgur.com/gCZsFvI.png)
+![negativity of conditional entropy](https://imgur.com/gCZsFvI.png|width=100)
 
 #### End prover<a name="end"></a>
 This terminates the program.
@@ -131,7 +133,7 @@ This terminates the program.
 ## Credits
 This work is inspired by the classical ITIP formulated by Siu Wai Ho, Alex Lin Ling, Chee Wei Tan and Raymond Yeung. More information can be found from [the AITIP website](https://aitip.org).
 
-I would like to thank Professor Mario Berta and Tobias. This project would not be possible without their supoorts and guidance.
+I would like to thank Professor Mario Berta and Tobias Rippchen. This project would not be possible without their supoorts and guidance.
 
 ## Warning
 This is a master-thesis project, and still has a lot of rooms for improvements.
