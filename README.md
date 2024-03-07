@@ -35,9 +35,7 @@ Quantum ITIP automatically proves if a quantum information inequality can be der
 ## Introduction
 A quantum state can be described by a density matrix $\hat{\rho}$. If we are only interested in parts of the quantum system, we can trace out the parts that do not belong in those of our interests. For example, assume we only have access to a part of a bipartite system $AB$ whose density matrix is denoted as $\hat{\rho}_{AB}$. Without loss of generality, the system accessible to us is $A$. The corresponding density matrix of system $A$ is defined as 
 
-$$
-\hat{\rho}_{A} = \mathrm{Tr}_{B}(\hat{\rho}_{AB})
-$$
+$$\hat{\rho}_{A} = \mathrm{Tr}_{B}(\hat{\rho}_{AB})$$
 
 where $\hat{\rho}_{A}$ is also called the **reduced density matrix** of $\hat{\rho}_{AB}$.
 
