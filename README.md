@@ -3,7 +3,7 @@
     </div>
      <br/> 
 <div align="center">
-An information prover dedicated to quantum information theory.
+An information inequality prover dedicated to quantum information theory.
 </div>
 
 ---
